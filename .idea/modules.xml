@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/kapsowar-db.iml" filepath="$PROJECT_DIR$/kapsowar-db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/csv-combination-script.iml" filepath="$PROJECT_DIR$/csv-combination-script.iml" />
     </modules>
   </component>
 </project>
