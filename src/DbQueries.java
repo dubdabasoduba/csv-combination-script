@@ -237,10 +237,13 @@ public class DbQueries {
 		int itemId = 0;
 
 		try {
-			Statement st = conn.createStatement();
-			String sql = "select item_id from inv_item where name=\"" + itemName + "\"";
+			String sql = "select i.* from inv_item i where \n"
+					+ "replace(replace(lower(i.name),\"  \", \" \"),\"\\\"\",\"\")  = ?";
+			System.out.println("SQL = " + sql);
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setString(1, itemName);
 
-			ResultSet rs = st.executeQuery(sql);
+			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
 				itemId = rs.getInt("item_id");
 			}

@@ -36,10 +36,11 @@ public class ReadCsv {
 				//total++;
 				if (++total == 1)
 					continue;
-				String itemName = record.get("Name");
+				String itemName = record.get("Name").toLowerCase();
 				System.out.println("Item Name = " + itemName);
 				itemName = itemName.replaceAll("\"","");
-				int itemId = queries.retrieveItemGivenName(itemName);
+				System.out.println("Trimmed Item Names = " +itemName.trim());
+				int itemId = queries.retrieveItemGivenName(itemName.trim());
 
 				if (itemId > 0) {
 					count++;
@@ -96,7 +97,10 @@ public class ReadCsv {
 
 			System.out.println("Insert" +departmentId);
 
-			int itemId = queries.insertNewItem(record.get("Name"),departmentId, record.get("Buying Price"));
+			String name = record.get("Name").trim().replace("\"","\\\"");
+			System.out.println("The escaped name = " +name);
+
+			int itemId = queries.insertNewItem(name,departmentId, record.get("Buying Price"));
 			String codeItem = record.get("Codes");
 			String itemCode = queries.getItemCode(itemId);
 
@@ -104,7 +108,7 @@ public class ReadCsv {
 				if (!codeItem.equalsIgnoreCase(itemCode)){
 					queries.updateItemCode(itemId,codeItem);
 				}
-			} else {
+			} else if (codeItem != null) {
 				queries.createItemCode(itemId, codeItem);
 			}
 
@@ -150,7 +154,10 @@ public class ReadCsv {
 				price = buyingPrice;
 			}
 
-			queries.updateItem(itemId,departmentId,record.get("Name"), price);
+			String name = record.get("Name").trim().replace("\"","\\\"");
+			System.out.println("The escaped name = " +name);
+
+			queries.updateItem(itemId,departmentId,name, price);
 			String codeItem = record.get("Codes");
 			String itemCode = queries.getItemCode(itemId);
 
@@ -158,7 +165,7 @@ public class ReadCsv {
 				if (!codeItem.equalsIgnoreCase(itemCode)){
 					queries.updateItemCode(itemId,codeItem);
 				}
-			} else {
+			} else if (codeItem != null) {
 				queries.createItemCode(itemId, codeItem);
 			}
 
